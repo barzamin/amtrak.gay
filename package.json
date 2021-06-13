@@ -1,0 +1,21 @@
+{
+  "name": "amtrak.gay",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/barzamin/amtrak.gay.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/barzamin/amtrak.gay/issues"
+  },
+  "homepage": "https://github.com/barzamin/amtrak.gay#readme"
+}
