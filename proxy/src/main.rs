@@ -1,11 +1,9 @@
 #[macro_use]
 extern crate rocket;
-use std::time::Duration;
 
 use rocket::response::Debug;
 use rocket::serde::json::{json, Value};
 use rocket::State;
-use geojson::GeoJson;
 use thiserror::Error;
 
 const ENDPOINT_GET_TRAINS: &str =
@@ -20,7 +18,7 @@ enum AppErr {
     DecryptionError(amtk::DecryptionError),
 
     #[error("couldn't parse response JSON after decryption")]
-    ResponseParseFailed(geojson::Error),
+    ResponseParseFailed(serde_json::Error),
 }
 
 #[get("/trains")]
@@ -33,10 +31,10 @@ async fn trains(rcl: &State<reqwest::Client>) -> Result<Value, Debug<AppErr>> {
         .text().await.map_err(AppErr::AmtrakRequestError)?;
 
     let decrypted = amtk::decrypt(&resp).map_err(AppErr::DecryptionError)?;
-    let geojson = decrypted.parse::<GeoJson>().map_err(AppErr::ResponseParseFailed)?;
+    let geojson = decrypted.parse::<Value>().map_err(AppErr::ResponseParseFailed)?;
 
     Ok(json!({
-        "doggy": "woof",
+        "puppy": "wuf", // 🐶
         "geojson": geojson,
     }))
 }
