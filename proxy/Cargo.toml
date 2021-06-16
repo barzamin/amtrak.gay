@@ -1,0 +1,26 @@
+[package]
+name = "amtrak-gay"
+version = "0.1.0"
+authors = ["Erin Moon <erin@hecke.rs>"]
+edition = "2018"
+
+[dependencies]
+amtk = "0.1"
+
+geojson = "0.22"
+
+thiserror = "1.0"
+serde = "1.0"
+serde_json = "1.0"
+
+[dependencies.tokio]
+version = "1.6"
+features = ["sync"]
+
+[dependencies.rocket]
+version = "0.5.0-rc.1"
+features = ["json"]
+
+[dependencies.reqwest]
+version = "0.11"
+features = ["json"]
