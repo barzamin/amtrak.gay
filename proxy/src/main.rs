@@ -61,6 +61,7 @@ async fn trains(rcl: &State<reqwest::Client>) -> Result<Value, Debug<AppErr>> {
 #[launch]
 fn rocket() -> _ {
     rocket::build()
+        .attach(CORS {})
         .manage(reqwest::Client::new())
         .mount("/", routes![trains])
 }
