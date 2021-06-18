@@ -1,6 +1,8 @@
 #[macro_use]
 extern crate rocket;
 
+use rocket::fairing::{Fairing, Info, Kind};
+use rocket::http::Header;
 use rocket::response::Debug;
 use rocket::serde::json::{json, Value};
 use rocket::State;
@@ -19,6 +21,23 @@ enum AppErr {
 
     #[error("couldn't parse response JSON after decryption")]
     ResponseParseFailed(serde_json::Error),
+}
+
+struct CORS {}
+
+#[rocket::async_trait]
+impl Fairing for CORS {
+    fn info(&self) -> Info {
+        Info {
+            name: "CORS on all routes",
+            kind: Kind::Response,
+        }
+    }
+
+    async fn on_response<'r>(&self, _req: &'r rocket::Request<'_>, res: &mut rocket::Response<'r>) {
+        res.set_header(Header::new("Access-Control-Allow-Origin", "*"));
+        res.set_header(Header::new("Access-Control-Allow-Methods", "GET"));
+    }
 }
 
 #[get("/trains")]
